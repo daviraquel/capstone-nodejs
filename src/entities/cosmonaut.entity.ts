@@ -2,11 +2,11 @@ import {
   Entity,
   Column,
   PrimaryColumn,
-  //importar relacionamentos
   //ManyToMany
   //JoinTable
 } from "typeorm";
 import { v4 as uuid } from "uuid";
+//import {CelestialBody} from "./celestialBody.entity"
 
 //importar entities relacionadas
 
