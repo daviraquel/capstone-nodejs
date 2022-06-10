@@ -2,17 +2,19 @@ import {
   Entity,
   Column,
   PrimaryColumn,
-  //OneToOne
-  //ManyToOne
-  //JoinTable
+  OneToOne,
+  ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 
-//import {Data} from "./bodyData.entity"
-//import {Cosmonaut} from "./cosmonaut.entity"
+import { Data } from "./data.entity";
+import { Cosmonaut } from "./cosmonaut.entity";
+import { Category } from "./category.entity";
+import { Galaxy } from "./galaxy.entity";
 
 @Entity()
-export class Cosmonaut {
+export class CelestialBody {
   @PrimaryColumn("uuid")
   readonly id: string;
   @Column()
@@ -20,20 +22,20 @@ export class Cosmonaut {
   @Column()
   created_on: Date;
 
-  // @OneToOne((type) => Data, {
-  //     eager: true,
-  //   })
-  // @JoinColumn()
-  // data: Data;
+  @OneToOne((type) => Data, {
+    eager: true,
+  })
+  @JoinColumn()
+  data: Data;
 
-  //   @ManyToOne((type) => Cosmonaut, (Cosmonaut) => Cosmonaut.createdBodies)
-  //   creator: Cosmonaut;
+  @ManyToOne((type) => Cosmonaut, (cosmonaut) => cosmonaut.created_bodies)
+  creator: Cosmonaut;
 
-  //   @ManyToOne((type) => Category, (Category) => Category.celestialBodies)
-  //   category: Category;
+  @ManyToOne((type) => Category, (category) => category.celestial_bodies)
+  category: Category;
 
-  //   @ManyToOne((type) => Galaxy, (Galaxy) => Galaxy.celestialBodies)
-  //   galaxy: Galaxy;
+  @ManyToOne((type) => Galaxy, (galaxy) => galaxy.celestial_bodies)
+  galaxy: Galaxy;
 
   constructor() {
     if (!this.id) {
