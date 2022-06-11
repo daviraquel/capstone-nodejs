@@ -1,25 +1,18 @@
-import {
-  Entity,
-  Column,
-  PrimaryColumn,
-  //importar relacionamentos
-  //ManyToMany
-  //JoinTable
-} from "typeorm";
+import { Entity, Column, PrimaryColumn, OneToOne, JoinColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 
-//import {CelestialBody} from "./celestialBody.entity"
+import { CelestialBody } from "./celestialBody.entity";
 
 @Entity()
-export class Cosmonaut {
+export class Data {
   @PrimaryColumn("uuid")
   readonly id: string;
 
-  // @OneToOne((type) => CelestialBody, {
-  //     eager: true,
-  //   })
-  //   @JoinColumn()
-  //   body_id: CelestialBody.id; (VERIFICAR FORMA DE RELAÇÃO)
+  @OneToOne((type) => CelestialBody, {
+    eager: true,
+  })
+  @JoinColumn()
+  body_id: CelestialBody["id"];
 
   @Column()
   description: string;

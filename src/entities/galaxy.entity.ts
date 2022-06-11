@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryColumn, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryColumn, ManyToOne, OneToMany } from "typeorm";
 import { v4 as uuid } from "uuid";
 
 import { Cosmonaut } from "./cosmonaut.entity";
+import { CelestialBody } from "./celestialBody.entity";
 
 @Entity()
 export class Galaxy {
@@ -14,8 +15,13 @@ export class Galaxy {
   @Column()
   password: string;
 
-  // @ManyToOne((type) => Cosmonaut, (cosmonaut) => cosmonaut.created_galaxies)
-  // creator: Cosmonaut;
+  @ManyToOne((type) => Cosmonaut, (cosmonaut) => cosmonaut.created_bodies)
+  creator: Cosmonaut;
+
+  @OneToMany((type) => CelestialBody, (celestialBody) => celestialBody.galaxy, {
+    eager: true,
+  })
+  celestial_bodies: CelestialBody[];
 
   constructor() {
     if (!this.id) {
