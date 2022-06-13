@@ -2,13 +2,14 @@ import {
   Entity,
   Column,
   PrimaryColumn,
-  //importar relacionamentos
-  //ManyToMany
-  //JoinTable
+  OneToMany,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 
-//importar entities relacionadas
+import { CelestialBody } from "./celestialBody.entity";
+import { Galaxy } from "./galaxy.entity";
 
 @Entity()
 export class Cosmonaut {
@@ -21,9 +22,19 @@ export class Cosmonaut {
   @Column()
   password: string;
 
-  // @ManyToMany((type) => CelestialBody, { eager: true })
-  // @JoinTable()
-  // studied_bodies: CelestialBody[];
+  @ManyToMany((type) => CelestialBody, { eager: true })
+  @JoinTable()
+  studied_bodies: CelestialBody[];
+
+  @OneToMany(
+    (type) => CelestialBody,
+    (celestialBody) => celestialBody.creator,
+    { eager: true }
+  )
+  created_bodies: CelestialBody[];
+
+  @OneToMany((type) => Galaxy, (galaxy) => galaxy.creator, { eager: true })
+  created_galaxies: Galaxy[];
 
   constructor() {
     if (!this.id) {
