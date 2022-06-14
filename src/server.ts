@@ -4,7 +4,11 @@ import { AppDataSource } from "./data-source";
 AppDataSource.initialize()
   .then(() => {
     console.log("Data Source initialized");
-    app.listen(3000);
+    const port = process.env.PORT ?? 3000;
+
+    app.listen(port, () => {
+      console.log(`App running on http://localhost:${port}/`);
+    });
   })
   .catch((err) => {
     console.error("Error during Data Source initialization", err);
