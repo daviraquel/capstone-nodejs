@@ -1,6 +1,15 @@
 import { DeleteResult, UpdateResult } from "typeorm";
 import { Galaxy } from "../../entities/galaxy.entity";
 
+export interface IGalaxyCreate {
+  name: string;
+  description: string;
+}
+export interface IGalaxyUpdate {
+  name: string;
+  description: string;
+}
+
 export interface IGalaxyRepo {
   save: (galaxy: Galaxy) => Promise<Galaxy>;
   getAll: () => Promise<Galaxy[]>;
