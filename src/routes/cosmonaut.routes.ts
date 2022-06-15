@@ -1,14 +1,14 @@
 import { Router } from "express";
 
-import cosmonautCreateController from "../controllers/cosmonaut/cosmonautCreate.controller";
-//importar demais controllers
+import cosmonautController from "../controllers/cosmonaut/cosmonaut.controller";
 
 //importar middlewares
 
 const routes = Router();
 
 export const cosmonautRoutes = () => {
-  routes.post("/", cosmonautCreateController);
+  routes.post("/", cosmonautController.createCosmonaut);
+  routes.get("/", cosmonautController.getAllCosmonauts);
   //adicionar demais rotas
 
   return routes;
