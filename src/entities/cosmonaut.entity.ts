@@ -1,44 +1,38 @@
+import { compare } from "bcrypt";
 import {
   Entity,
   Column,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   OneToMany,
   ManyToMany,
   JoinTable,
 } from "typeorm";
-import { v4 as uuid } from "uuid";
 
 import { CelestialBody } from "./celestialBody.entity";
 import { Galaxy } from "./galaxy.entity";
 
 @Entity()
 export class Cosmonaut {
-  @PrimaryColumn("uuid")
-  readonly id: string;
-  @Column()
+  @PrimaryGeneratedColumn("uuid")
+  readonly id?: string;
+  @Column({ unique: true })
   user_name: string;
-  @Column()
+  @Column({ unique: true })
   email: string;
   @Column()
   password: string;
 
-  @ManyToMany((type) => CelestialBody, { eager: true })
+  @ManyToMany((type) => CelestialBody)
   @JoinTable()
   studied_bodies: CelestialBody[];
 
-  @OneToMany(
-    (type) => CelestialBody,
-    (celestialBody) => celestialBody.creator,
-    { eager: true }
-  )
+  @OneToMany((type) => CelestialBody, (celestialBody) => celestialBody.creator)
   created_bodies: CelestialBody[];
 
-  @OneToMany((type) => Galaxy, (galaxy) => galaxy.creator, { eager: true })
+  @OneToMany((type) => Galaxy, (galaxy) => galaxy.creator)
   created_galaxies: Galaxy[];
 
-  constructor() {
-    if (!this.id) {
-      this.id = uuid();
-    }
-  }
+  comparePassword = async (passwordToCompare: string): Promise<boolean> => {
+    return await compare(passwordToCompare, this.password);
+  };
 }

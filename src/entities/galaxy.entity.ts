@@ -12,8 +12,6 @@ export class Galaxy {
   name: string;
   @Column()
   description: string;
-  @Column()
-  password: string;
 
   @ManyToOne((type) => Cosmonaut, (cosmonaut) => cosmonaut.created_bodies)
   creator: Cosmonaut;

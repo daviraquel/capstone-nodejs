@@ -20,7 +20,7 @@ class CosmonautRepository implements ICosmonautRepo {
 
   update = async (id: string, payload: Partial<Cosmonaut>) => {
     if (payload.password) {
-      payload.password = await hashSync(payload.password, 10);
+      payload.password = hashSync(payload.password, 10);
     }
 
     return await this.repo.update(id, { ...payload });
