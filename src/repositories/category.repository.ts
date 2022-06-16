@@ -1,7 +1,7 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Category } from "../entities/category.entity";
-import { ICategoryRepo } from "../interfaces/category";
+import { ICategoryCreate, ICategoryRepo } from "../interfaces/category";
 
 class CategoryRepository implements ICategoryRepo {
   private repo: Repository<Category>;
@@ -10,10 +10,9 @@ class CategoryRepository implements ICategoryRepo {
     this.repo = AppDataSource.getRepository(Category);
   }
 
-  save = async (category: Category) => await this.repo.save(category);
+  save = async (category: ICategoryCreate) => await this.repo.save(category);
 
   getAll = async () => await this.repo.find();
-
   retrieve = async (payload: object) => {
     return await this.repo.findOneBy({ ...payload });
   };
