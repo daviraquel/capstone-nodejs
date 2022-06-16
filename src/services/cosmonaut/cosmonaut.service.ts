@@ -1,22 +1,24 @@
-import bcrypt, { hash } from "bcrypt";
+import { Request } from "express";
+import { hash } from "bcrypt";
+import { AssertsShape } from "yup/lib/object";
 import { AppDataSource } from "../../data-source";
 
 import { Cosmonaut } from "../../entities/cosmonaut.entity";
 
 import { ICosmonautCreate } from "../../interfaces/cosmonaut";
 import { cosmonautRepository } from "../../repositories";
+import { serializedCreateCosmonautSchema } from "../../schemas/cosmonaut/createCosmonaut.schema";
 
 class CosmonautService {
-  createCosmonaut = async (data: ICosmonautCreate) => {
-    (data as Cosmonaut).password = await hash((data as Cosmonaut).password, 10);
-    const newCosmonaut: Cosmonaut = await cosmonautRepository.save(
-      data as Cosmonaut
-    );
+  createCosmonaut = async ({
+    validData,
+  }: Request): Promise<AssertsShape<any>> => {
+    validData.password = await hash(validData.password, 10);
+    const newCosmonaut: Cosmonaut = await cosmonautRepository.save(validData);
 
-    return {
-      status: 201,
-      message: newCosmonaut,
-    };
+    return await serializedCreateCosmonautSchema.validate(newCosmonaut, {
+      stripUnknown: true,
+    });
   };
 
   getAll = async () => {
