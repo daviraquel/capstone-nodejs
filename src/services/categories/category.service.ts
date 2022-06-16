@@ -6,14 +6,6 @@ import categoryRepository from "../../repositories/category.repository";
 
 class CategoryService {
   CategoryCreate = async (body: ICategoryCreate) => {
-    // const categoryExists = await categoryRepository.retrieve({
-    //   name: body.name,
-    // });
-
-    // if (categoryExists) {
-    //   throw new AppError(409, "Category already exists");
-    // }
-
     const category: Category = await categoryRepository.save({ ...body });
     return { status: 201, message: category };
   };
@@ -24,7 +16,19 @@ class CategoryService {
     return categories;
   };
 
-  // ListById = async ({ category }: Request) => {};
+  UpdateCategory = async ({ category, body }: Request) => {
+    await categoryRepository.update(category.id, { ...body });
+
+    const { id } = category;
+    const categoryUpdate = await categoryRepository.retrieve({ id });
+
+    return categoryUpdate;
+  };
+
+  DeleteCategory = async ({ category }: Request) => {
+    await categoryRepository.delete(category.id);
+    return { status: 202, message: "Deleted category" };
+  };
 }
 
 export default new CategoryService();

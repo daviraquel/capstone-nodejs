@@ -12,5 +12,9 @@ export const categoryRoutes = () => {
 
   routes.get("/:id", IdVerify, categoryController.ListCategoryById);
 
+  routes.patch("/:id", IdVerify, categoryController.UpdateCategory);
+
+  routes.delete("/:id", IdVerify, categoryController.DeleteCategory);
+
   return routes;
 };
