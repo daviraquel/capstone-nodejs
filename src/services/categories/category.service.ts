@@ -1,13 +1,20 @@
 import { Request } from "express";
+import { AssertsShape } from "yup/lib/object";
 import { Category } from "../../entities/category.entity";
-import { AppError } from "../../errors/appError";
-import { ICategoryCreate } from "../../interfaces/category";
 import categoryRepository from "../../repositories/category.repository";
+import { serializedCreateCategorySchema } from "../../schemas/category/createCategory.schema";
 
 class CategoryService {
-  CategoryCreate = async (body: ICategoryCreate) => {
-    const category: Category = await categoryRepository.save({ ...body });
-    return { status: 201, message: category };
+  CategoryCreate = async ({
+    validData,
+  }: Request): Promise<AssertsShape<any>> => {
+    const category: Category = await categoryRepository.save({
+      ...(validData as Category),
+    });
+
+    return await serializedCreateCategorySchema.validate(category, {
+      stripUnknown: true,
+    });
   };
 
   ListAll = async (): Promise<Partial<Category>[] | void> => {
@@ -16,8 +23,10 @@ class CategoryService {
     return categories;
   };
 
-  UpdateCategory = async ({ category, body }: Request) => {
-    await categoryRepository.update(category.id, { ...body });
+  UpdateCategory = async ({ category, validData }: Request) => {
+    await categoryRepository.update(category.id, {
+      ...(validData as Category),
+    });
 
     const { id } = category;
     const categoryUpdate = await categoryRepository.retrieve({ id });
@@ -27,7 +36,6 @@ class CategoryService {
 
   DeleteCategory = async ({ category }: Request) => {
     await categoryRepository.delete(category.id);
-    return { status: 202, message: "Deleted category" };
   };
 }
 

@@ -1,18 +1,32 @@
 import { Router } from "express";
 import categoryController from "../controllers/categories/category.controller";
-import { CategoryExistsMiddleware } from "../middlewares";
-import IdVerify from "../middlewares/idVerifyCategory.middleware";
+import { schemaValidation } from "../middlewares";
+import { CheckCategoryExists, IdVerify } from "../middlewares/category";
+import {
+  createCategorySchema,
+  updateCategorySchema,
+} from "../schemas/category";
 
 const routes = Router();
 
 export const categoryRoutes = () => {
-  routes.post("/", CategoryExistsMiddleware, categoryController.CategoryCreate);
+  routes.post(
+    "/",
+    schemaValidation(createCategorySchema),
+    CheckCategoryExists,
+    categoryController.CategoryCreate
+  );
 
   routes.get("/", categoryController.ListAllCategories);
 
   routes.get("/:id", IdVerify, categoryController.ListCategoryById);
 
-  routes.patch("/:id", IdVerify, categoryController.UpdateCategory);
+  routes.patch(
+    "/:id",
+    schemaValidation(updateCategorySchema),
+    IdVerify,
+    categoryController.UpdateCategory
+  );
 
   routes.delete("/:id", IdVerify, categoryController.DeleteCategory);
 
