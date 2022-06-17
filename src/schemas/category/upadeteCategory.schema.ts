@@ -5,10 +5,4 @@ const updateCategorySchema = yup.object().shape({
   description: yup.string().optional(),
 });
 
-const seralizedUpdateCategorySchema = yup.object().shape({
-  id: yup.string().uuid().required(),
-  name: yup.string().required(),
-  description: yup.string().optional(),
-});
-
-export { updateCategorySchema, seralizedUpdateCategorySchema };
+export { updateCategorySchema };
