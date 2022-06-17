@@ -1,14 +1,13 @@
 import { Request, Response } from "express";
-import { AppError, handleError } from "../../errors/appError";
 import categoryService from "../../services/categories/category.service";
 
 class CategoryController {
   CategoryCreate = async (req: Request, res: Response) => {
-    const { status, message } = await categoryService.CategoryCreate(req.body);
-    return res.status(status).json(message);
+    const category = await categoryService.CategoryCreate(req);
+    return res.status(201).json(category);
   };
 
-  ListAllCategories = async (req: Request, res: Response) => {
+  ListAllCategories = async (_: Request, res: Response) => {
     const categories = await categoryService.ListAll();
     return res.status(200).json(categories);
   };
@@ -24,8 +23,8 @@ class CategoryController {
   };
 
   DeleteCategory = async (req: Request, res: Response) => {
-    const { status, message } = await categoryService.DeleteCategory(req);
-    return res.status(status).json(message);
+    await categoryService.DeleteCategory(req);
+    return res.status(202).json({ message: "Deleted category" });
   };
 }
 

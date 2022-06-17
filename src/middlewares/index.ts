@@ -1,3 +1,4 @@
-import CategoryExistsMiddleware from "./categoryExists.middleware";
+import { schemaValidation } from "./schemaValidation.middleware";
+import { errorMiddleware } from "./error.middleware";
 
-export { CategoryExistsMiddleware };
+export { schemaValidation, errorMiddleware };

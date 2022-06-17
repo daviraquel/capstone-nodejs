@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { Cosmonaut } from "../entities";
-import { cosmonautRepository } from "../repositories";
+import { Cosmonaut } from "../../entities";
+import { cosmonautRepository } from "../../repositories";
 
 const checkCosmonautExists = async (
   req: Request,
@@ -8,14 +8,14 @@ const checkCosmonautExists = async (
   next: NextFunction
 ) => {
   const foundEmail: Cosmonaut = await cosmonautRepository.retrieve({
-    email: req.validData.email,
+    email: (req.validData as Cosmonaut).email,
   });
   if (foundEmail) {
     return res.status(409).json({ message: "Email already registered." });
   }
 
   const foundUsername: Cosmonaut = await cosmonautRepository.retrieve({
-    email: req.validData.user_name,
+    email: (req.validData as Cosmonaut).user_name,
   });
   if (foundUsername) {
     return res.status(409).json({ message: "User_name already registered." });

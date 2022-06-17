@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response } from "express";
-import categoryRepository from "../repositories/category.repository";
+import { Category } from "../../entities/category.entity";
+import categoryRepository from "../../repositories/category.repository";
 
-const CategoryExistsMiddleware = async (
+const CheckCategoryExists = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   const categoryExists = await categoryRepository.retrieve({
-    name: req.body.name,
+    name: (req.validData as Category).name,
   });
 
   if (categoryExists) {
@@ -18,4 +19,4 @@ const CategoryExistsMiddleware = async (
 
   return next();
 };
-export default CategoryExistsMiddleware;
+export default CheckCategoryExists;

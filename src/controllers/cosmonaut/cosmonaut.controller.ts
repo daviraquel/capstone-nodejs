@@ -3,14 +3,8 @@ import cosmonautService from "../../services/cosmonaut/cosmonaut.service";
 
 class cosmonautController {
   createCosmonaut = async (req: Request, res: Response) => {
-    const { user_name, email, password } = req.body;
-    const { status, message } = await cosmonautService.createCosmonaut({
-      user_name,
-      email,
-      password,
-    });
-
-    return res.status(status).json(message);
+    const cosmonaut = await cosmonautService.createCosmonaut(req);
+    return res.status(201).json(cosmonaut);
   };
 
   getAllCosmonauts = async (req: Request, res: Response) => {
