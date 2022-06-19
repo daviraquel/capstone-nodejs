@@ -1,27 +1,22 @@
-import { Entity, Column, PrimaryColumn, OneToMany } from "typeorm";
-import { v4 as uuid } from "uuid";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  PrimaryColumn,
+  OneToMany,
+} from "typeorm";
 
 import { CelestialBody } from "./celestialBody.entity";
 
 @Entity()
 export class Category {
-  @PrimaryColumn("uuid")
-  readonly id: string;
-  @Column()
+  @PrimaryGeneratedColumn("uuid")
+  readonly id?: string;
+  @Column({ unique: true })
   name: string;
-  @Column()
+  @Column({ nullable: true })
   description: string;
 
-  @OneToMany(
-    (type) => CelestialBody,
-    (celestialBody) => celestialBody.category,
-    { eager: true }
-  )
+  @OneToMany((type) => CelestialBody, (celestialBody) => celestialBody.category)
   celestial_bodies: CelestialBody[];
-
-  constructor() {
-    if (!this.id) {
-      this.id = uuid();
-    }
-  }
 }
