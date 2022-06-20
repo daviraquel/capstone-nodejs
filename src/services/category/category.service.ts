@@ -23,7 +23,10 @@ class CategoryService {
     return categories;
   };
 
-  UpdateCategory = async ({ category, validData }: Request) => {
+  UpdateCategory = async ({
+    category,
+    validData,
+  }: Request): Promise<AssertsShape<any>> => {
     await categoryRepository.update(category.id, {
       ...(validData as Category),
     });

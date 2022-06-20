@@ -2,7 +2,7 @@ import { Request } from "express";
 import { AssertsShape } from "yup/lib/object";
 import { CelestialBody } from "../../entities";
 import { celestialBodyRepository } from "../../repositories";
-import { serializedCelestialBodyChema } from "../../schemas/celestialBody";
+import { serializedCelestialBodySchema } from "../../schemas/celestialBody";
 
 class CelestialBodyService {
   CreateCelestialBody = async ({
@@ -12,9 +12,26 @@ class CelestialBodyService {
       ...(validData as CelestialBody),
     });
 
-    return await serializedCelestialBodyChema.validate(celestialBody, {
+    return await serializedCelestialBodySchema.validate(celestialBody, {
       stripUnknown: true,
     });
+  };
+
+  UpdateCelestialBody = async ({ celestialBody, validData }: Request) => {
+    await celestialBodyRepository.update(celestialBody.id, {
+      ...(validData as CelestialBody),
+    });
+
+    const { id } = celestialBody;
+    const celestialBodyUpdate = await celestialBodyRepository.retrieve({ id });
+
+    return await serializedCelestialBodySchema.validate(celestialBodyUpdate, {
+      stripUnknown: true,
+    });
+  };
+
+  DeleteCelestialBody = async ({ celestialBody }: Request) => {
+    await celestialBodyRepository.delete(celestialBody.id);
   };
 }
 

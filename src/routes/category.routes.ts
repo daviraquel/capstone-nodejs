@@ -1,5 +1,5 @@
 import { Router } from "express";
-import categoryController from "../controllers/categories/category.controller";
+import categoryController from "../controllers/category/category.controller";
 import { schemaValidation } from "../middlewares";
 import { CheckCategoryExists, IdVerify } from "../middlewares/category";
 import {

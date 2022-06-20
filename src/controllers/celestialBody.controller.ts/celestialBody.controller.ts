@@ -6,6 +6,18 @@ class CelestialBodyController {
     const celestialBody = await celestialBodyService.CreateCelestialBody(req);
     return res.status(201).json(celestialBody);
   };
+
+  UpdateCelestialBody = async (req: Request, res: Response) => {
+    const updateCelestialBody = await celestialBodyService.UpdateCelestialBody(
+      req
+    );
+    return res.status(200).json(updateCelestialBody);
+  };
+
+  DeleteCelestialBody = async (req: Request, res: Response) => {
+    await celestialBodyService.DeleteCelestialBody(req);
+    return res.status(200).json({ message: "Deleted celestial body" });
+  };
 }
 
 export default new CelestialBodyController();

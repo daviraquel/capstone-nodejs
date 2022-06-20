@@ -5,6 +5,7 @@ declare global {
     interface Request {
       validData: Cosmonaut | Category | Data | CelestialBody; //adicionar | Categories | OutroEntity
       category: Category;
+      celestialBody: CelestialBody;
     }
   }
 }

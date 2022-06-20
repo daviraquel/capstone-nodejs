@@ -1,4 +1,9 @@
 import { createCelestialBodySchema } from "./createCelestialBody.schema";
-import { serializedCelestialBodyChema } from "./serializedCelestialBody.schema";
+import { serializedCelestialBodySchema } from "./serializedCelestialBody.schema";
+import { updateCelestialBodySchema } from "./updateCelestialBody.schema";
 
-export { createCelestialBodySchema, serializedCelestialBodyChema };
+export {
+  createCelestialBodySchema,
+  serializedCelestialBodySchema,
+  updateCelestialBodySchema,
+};
