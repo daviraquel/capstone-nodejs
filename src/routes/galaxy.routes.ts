@@ -1,11 +1,18 @@
 import { Router } from "express";
-
-import galaxyCreateController from "../controllers/galaxy/galaxyCreate.controller";
+import GalaxyController from "../controllers/galaxy/galaxyCreate.controller";
+import { schemaValidation } from "../middlewares";
+import { createGalaxySchema } from "../schemas/galaxy";
 
 const routes = Router();
 
 export const galaxyRoutes = () => {
-  routes.post("/", galaxyCreateController);
-
+  routes.post(
+    "/",
+    schemaValidation(createGalaxySchema),
+    GalaxyController.CreateGalaxy
+  );
+  routes.get("/");
+  routes.delete("/");
+  routes.patch("/");
   return routes;
 };

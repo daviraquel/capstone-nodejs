@@ -1,10 +1,12 @@
 import { Response, Request } from "express";
 import galaxyCreateService from "../../services/galaxy/galaxyCreate.service";
 
-const galaxyCreateController = async (req: Request, res: Response) => {
-  const { name, description, creator } = req.body;
-  const newGalaxy = await galaxyCreateService({ name, description, creator });
+class GalaxyController {
+  CreateGalaxy = async (req: Request, res: Response) => {
+    const { name, description, creator } = req.body;
+    const galaxy = await galaxyCreateService({ name, description, creator });
+    return res.status(201).json(galaxy);
+  };
+}
 
-  return res.status(newGalaxy.status).send(newGalaxy.create);
-};
-export default galaxyCreateController;
+export default new GalaxyController();
