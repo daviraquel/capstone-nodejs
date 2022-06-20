@@ -18,8 +18,8 @@ export const cosmonautRoutes = () => {
     cosmonautController.createCosmonaut
   );
   routes.get("/", cosmonautController.getAllCosmonauts);
-  routes.patch("/id", cosmonautController.updateCosmonaut);
-  routes.delete("/id", cosmonautController.deleteCosmonaut);
+  routes.patch("/:id", cosmonautController.updateCosmonaut);
+  routes.delete("/:id", cosmonautController.deleteCosmonaut);
 
   return routes;
 };
