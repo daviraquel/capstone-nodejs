@@ -1,8 +1,8 @@
 import { Request } from "express";
 import { AssertsShape } from "yup/lib/object";
 import { Category } from "../../entities/category.entity";
-import categoryRepository from "../../repositories/category.repository";
-import { seralizedCategorySchema } from "../../schemas/category";
+import { categoryRepository } from "../../repositories";
+import { serializedCategorySchema } from "../../schemas/category";
 
 class CategoryService {
   CategoryCreate = async ({
@@ -12,7 +12,7 @@ class CategoryService {
       ...(validData as Category),
     });
 
-    return await seralizedCategorySchema.validate(category, {
+    return await serializedCategorySchema.validate(category, {
       stripUnknown: true,
     });
   };
@@ -31,7 +31,7 @@ class CategoryService {
     const { id } = category;
     const categoryUpdate = await categoryRepository.retrieve({ id });
 
-    return await seralizedCategorySchema.validate(categoryUpdate, {
+    return await serializedCategorySchema.validate(categoryUpdate, {
       stripUnknown: true,
     });
   };

@@ -1,12 +1,11 @@
 import {
   Entity,
   Column,
-  PrimaryColumn,
   OneToOne,
   ManyToOne,
   JoinColumn,
+  PrimaryGeneratedColumn,
 } from "typeorm";
-import { v4 as uuid } from "uuid";
 
 import { Data } from "./data.entity";
 import { Cosmonaut } from "./cosmonaut.entity";
@@ -15,11 +14,13 @@ import { Galaxy } from "./galaxy.entity";
 
 @Entity()
 export class CelestialBody {
-  @PrimaryColumn("uuid")
-  readonly id: string;
+  @PrimaryGeneratedColumn("uuid")
+  readonly id?: string;
+
   @Column()
   name: string;
-  @Column()
+
+  @Column({ default: new Date() })
   created_on: Date;
 
   @OneToOne((type) => Data, {
@@ -36,13 +37,4 @@ export class CelestialBody {
 
   @ManyToOne((type) => Galaxy, (galaxy) => galaxy.celestial_bodies)
   galaxy: Galaxy;
-
-  constructor() {
-    if (!this.id) {
-      this.id = uuid();
-    }
-    if (!this.created_on) {
-      this.created_on = new Date();
-    }
-  }
 }

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { Category } from "../../entities/category.entity";
-import categoryRepository from "../../repositories/category.repository";
+import { categoryRepository } from "../../repositories";
 
 const CheckCategoryExists = async (
   req: Request,

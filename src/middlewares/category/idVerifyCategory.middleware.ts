@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import categoryRepository from "../../repositories/category.repository";
+import { categoryRepository } from "../../repositories";
 
 const IdVerify = async (
   request: Request,

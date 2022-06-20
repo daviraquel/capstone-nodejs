@@ -1,9 +1,9 @@
-import { Category, Cosmonaut, Data } from "../entities";
+import { Category, CelestialBody, Cosmonaut, Data } from "../entities";
 
 declare global {
   namespace Express {
     interface Request {
-      validData: Cosmonaut | Category | Data; //adicionar | Categories | OutroEntity
+      validData: Cosmonaut | Category | Data | CelestialBody; //adicionar | Categories | OutroEntity
       category: Category;
     }
   }
