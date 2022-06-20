@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import categoryService from "../../services/categories/category.service";
+import categoryService from "../../services/category/category.service";
 
 class CategoryController {
   CategoryCreate = async (req: Request, res: Response) => {
@@ -24,7 +24,7 @@ class CategoryController {
 
   DeleteCategory = async (req: Request, res: Response) => {
     await categoryService.DeleteCategory(req);
-    return res.status(202).json({ message: "Deleted category" });
+    return res.status(200).json({ message: "Deleted category" });
   };
 }
 
