@@ -12,6 +12,23 @@ class cosmonautController {
 
     return res.status(status).json(message);
   };
+
+  updateCosmonaut = async (req: Request, res: Response) => {
+    const { status, message } = await cosmonautService.updateCosmonaut(
+      req.body.email,
+      req.body.password
+    );
+
+    return res.status(status).json(message);
+  };
+
+  deleteCosmonaut = async (req: Request, res: Response) => {
+    const { status, message } = await cosmonautService.deleteCosmonaut(
+      req.body.email
+    );
+
+    return res.status(status).json(message);
+  };
 }
 
 export default new cosmonautController();
