@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { Cosmonaut } from "../../entities";
 import { cosmonautRepository } from "../../repositories";
 
-const checkCosmonautExists = async (
+export const checkCosmonautExists = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -23,5 +23,3 @@ const checkCosmonautExists = async (
 
   return next();
 };
-
-export default checkCosmonautExists;

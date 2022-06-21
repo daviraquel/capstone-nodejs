@@ -7,27 +7,30 @@ class cosmonautController {
     return res.status(201).json(cosmonaut);
   };
 
+  loginCosmonaut = async (req: Request, res: Response) => {
+    const { status, message } = await cosmonautService.loginCosmonaut(req);
+    return res.status(status).json(message);
+  };
+
   getAllCosmonauts = async (req: Request, res: Response) => {
     const { status, message } = await cosmonautService.getAll();
 
     return res.status(status).json(message);
   };
 
-  updateCosmonaut = async (req: Request, res: Response) => {
-    const { status, message } = await cosmonautService.updateCosmonaut(
-      req.body.email,
-      req.body.password
-    );
-
+  getByIdCosmonaut = async (req: Request, res: Response) => {
+    const { status, message } = await cosmonautService.getById(req);
     return res.status(status).json(message);
   };
 
-  deleteCosmonaut = async (req: Request, res: Response) => {
-    const { status, message } = await cosmonautService.deleteCosmonaut(
-      req.body.email
-    );
+  updateCosmonaut = async (req: Request, res: Response) => {
+    const cosmonaut = await cosmonautService.updateCosmonaut(req);
+    return res.status(200).json(cosmonaut);
+  };
 
-    return res.status(status).json(message);
+  deleteCosmonaut = async (req: Request, res: Response) => {
+    await cosmonautService.deleteCosmonaut(req);
+    return res.status(200).json({ message: "Deleted cosmonaut" });
   };
 }
 

@@ -14,3 +14,8 @@ export interface ICosmonautRepo {
   update: (id: string, payload: Partial<Cosmonaut>) => Promise<UpdateResult>;
   delete: (id: string) => Promise<DeleteResult>;
 }
+
+export interface IReturnCosmonaut {
+  status: number;
+  message: object;
+}

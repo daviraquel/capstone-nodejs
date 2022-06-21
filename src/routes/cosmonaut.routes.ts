@@ -2,24 +2,55 @@ import { Router } from "express";
 
 import cosmonautController from "../controllers/cosmonaut/cosmonaut.controller";
 import { schemaValidation } from "../middlewares";
+import {
+  checkCosmonautExists,
+  IdVerifyCosmonaut,
+} from "../middlewares/cosmonaut";
+import { validateToken } from "../middlewares/validateToken.middleware";
 
-import checkCosmonautExists from "../middlewares/cosmonaut/checkCosmonautExists.middleware";
-
-import { createCosmonautSchema } from "../schemas/cosmonaut/createCosmonaut.schema";
-
-//importar middlewares
+import {
+  createCosmonautSchema,
+  loginCosmonautSchema,
+  updateCosmonautSchema,
+} from "../schemas/cosmonaut";
 
 const routes = Router();
 
 export const cosmonautRoutes = () => {
   routes.post(
     "/",
-    [schemaValidation(createCosmonautSchema), checkCosmonautExists],
+    schemaValidation(createCosmonautSchema),
+    checkCosmonautExists,
     cosmonautController.createCosmonaut
   );
+  routes.post(
+    "/login",
+    schemaValidation(loginCosmonautSchema),
+    cosmonautController.loginCosmonaut
+  );
+
   routes.get("/", cosmonautController.getAllCosmonauts);
-  routes.patch("/:id", cosmonautController.updateCosmonaut);
-  routes.delete("/:id", cosmonautController.deleteCosmonaut);
+  routes.get(
+    "/profile",
+    validateToken,
+    IdVerifyCosmonaut,
+    cosmonautController.getByIdCosmonaut
+  );
+
+  routes.patch(
+    "/",
+    schemaValidation(updateCosmonautSchema),
+    validateToken,
+    IdVerifyCosmonaut,
+    cosmonautController.updateCosmonaut
+  );
+
+  routes.delete(
+    "/",
+    validateToken,
+    IdVerifyCosmonaut,
+    cosmonautController.deleteCosmonaut
+  );
 
   return routes;
 };
