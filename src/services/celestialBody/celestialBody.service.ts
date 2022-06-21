@@ -17,6 +17,15 @@ class CelestialBodyService {
     });
   };
 
+  GetCelestialBody = async () => {
+    const listCelestialBodies = await celestialBodyRepository.getAll();
+
+    return {
+      status: 200,
+      message: listCelestialBodies,
+    };
+  };
+
   UpdateCelestialBody = async ({ celestialBody, validData }: Request) => {
     await celestialBodyRepository.update(celestialBody.id, {
       ...(validData as CelestialBody),
