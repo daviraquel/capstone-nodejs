@@ -1,7 +1,8 @@
 import { Router } from "express";
-import categoryController from "../controllers/categories/category.controller";
+import categoryController from "../controllers/category/category.controller";
 import { schemaValidation } from "../middlewares";
 import { CheckCategoryExists, IdVerify } from "../middlewares/category";
+import { validateToken } from "../middlewares/validateToken.middleware";
 import {
   createCategorySchema,
   updateCategorySchema,
@@ -12,23 +13,35 @@ const routes = Router();
 export const categoryRoutes = () => {
   routes.post(
     "/",
+    validateToken,
     schemaValidation(createCategorySchema),
     CheckCategoryExists,
     categoryController.CategoryCreate
   );
 
-  routes.get("/", categoryController.ListAllCategories);
+  routes.get("/", validateToken, categoryController.ListAllCategories);
 
-  routes.get("/:id", IdVerify, categoryController.ListCategoryById);
+  routes.get(
+    "/:id",
+    validateToken,
+    IdVerify,
+    categoryController.ListCategoryById
+  );
 
   routes.patch(
     "/:id",
+    validateToken,
     schemaValidation(updateCategorySchema),
     IdVerify,
     categoryController.UpdateCategory
   );
 
-  routes.delete("/:id", IdVerify, categoryController.DeleteCategory);
+  routes.delete(
+    "/:id",
+    validateToken,
+    IdVerify,
+    categoryController.DeleteCategory
+  );
 
   return routes;
 };

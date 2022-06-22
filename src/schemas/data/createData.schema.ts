@@ -1,6 +1,7 @@
 import * as yup from "yup";
 
 const createDataSchema = yup.object().shape({
+  body_id: yup.string().uuid().required(),
   description: yup.string().lowercase().required(),
   mass: yup.number().required(),
   volume: yup.number().required(),
