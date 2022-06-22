@@ -72,22 +72,22 @@ Passado Token pela header authorization :
 
 ---
 
-### 1 - Cosmonauta
+### 1 - **Cosmonauta**
 
 ---
 
-### 2 - Galaxy
+### 2 - **Galaxy**
 
 ---
 
-### 3 - Celestial Body
+### 3 - **Celestial Body**
 
 ---
 
-### 4 - Data
+### 4 - **Data**
 
 ---
 
-### 5 - Category
+### 5 - **Category**
 
 ---
