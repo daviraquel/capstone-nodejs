@@ -21,6 +21,8 @@ export const celestialBodyRoutes = () => {
     checkCelestialBodyExists;
   celestialBodyController.CreateCelestialBody;
 
+  routes.get("/", celestialBodyController.GetCelestialBody);
+
   routes.patch(
     "/:id",
     validateToken,
