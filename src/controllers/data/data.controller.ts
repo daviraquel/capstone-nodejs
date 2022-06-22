@@ -8,9 +8,14 @@ class dataController {
   };
 
   getData = async (req: Request, res: Response) => {
-    const getData = await dataService.GetData();
+    const getData = await dataService.getData();
 
     return res.status(200).json(getData);
+  };
+
+  deleteData = async (req: Request, res: Response) => {
+    await dataService.deleteData(req);
+    return res.status(200).json({ message: "Deleted Data" });
   };
 }
 

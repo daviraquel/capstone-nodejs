@@ -15,13 +15,17 @@ class DataService {
     });
   };
 
-  GetData = async () => {
+  getData = async () => {
     const listData = await dataRepository.getAll();
 
     return {
       status: 200,
       message: listData,
     };
+  };
+
+  deleteData = async ({ validData }: Request) => {
+    await dataRepository.delete(validData.id);
   };
 }
 
