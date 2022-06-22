@@ -1,15 +1,56 @@
 import { Router } from "express";
 
 import cosmonautController from "../controllers/cosmonaut/cosmonaut.controller";
+import { schemaValidation } from "../middlewares";
+import {
+  checkCosmonautExists,
+  IdVerifyCosmonaut,
+} from "../middlewares/cosmonaut";
+import { validateToken } from "../middlewares/validateToken.middleware";
 
-//importar middlewares
+import {
+  createCosmonautSchema,
+  loginCosmonautSchema,
+  updateCosmonautSchema,
+} from "../schemas/cosmonaut";
 
 const routes = Router();
 
 export const cosmonautRoutes = () => {
-  routes.post("/", cosmonautController.createCosmonaut);
+  routes.post(
+    "/",
+    schemaValidation(createCosmonautSchema),
+    checkCosmonautExists,
+    cosmonautController.createCosmonaut
+  );
+  routes.post(
+    "/login",
+    schemaValidation(loginCosmonautSchema),
+    cosmonautController.loginCosmonaut
+  );
+
   routes.get("/", cosmonautController.getAllCosmonauts);
-  //adicionar demais rotas
+  routes.get(
+    "/profile",
+    validateToken,
+    IdVerifyCosmonaut,
+    cosmonautController.getByIdCosmonaut
+  );
+
+  routes.patch(
+    "/",
+    schemaValidation(updateCosmonautSchema),
+    validateToken,
+    IdVerifyCosmonaut,
+    cosmonautController.updateCosmonaut
+  );
+
+  routes.delete(
+    "/",
+    validateToken,
+    IdVerifyCosmonaut,
+    cosmonautController.deleteCosmonaut
+  );
 
   return routes;
 };
