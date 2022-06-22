@@ -12,5 +12,7 @@ export const dataRoutes = () => {
     dataController.createData
   );
 
+  routes.get("/", schemaValidation(createDataSchema), dataController.getData);
+
   return routes;
 };
