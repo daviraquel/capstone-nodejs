@@ -3,12 +3,17 @@ import * as yup from "yup";
 const createGalaxySchema = yup.object().shape({
   name: yup.string().required(),
   description: yup.string(),
-  creator: yup.string(),
+  creator: yup.string().uuid(),
 });
+
 const createSerelizedGalaxySchema = yup.object().shape({
-  name: yup.string().required(),
+  creator: yup.object().shape({
+    user_name: yup.string(),
+    email: yup.string(),
+  }),
   description: yup.string(),
-  creator: yup.string(),
+  name: yup.string().required(),
+  id: yup.string().uuid().required(),
 });
 
 const UpdateGalaxySchema = yup.object().shape({

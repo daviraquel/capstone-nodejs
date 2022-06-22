@@ -16,7 +16,7 @@ class GalaxyController {
   };
   DeleteGalaxy = async (req: Request, res: Response) => {
     await galaxyService.DeleteGalaxy(req);
-    return res.status(200).json("Galaxy was deleted");
+    return res.status(200).json({ message: "Galaxy was deleted" });
   };
   GetAGalaxy = async (req: Request, res: Response) => {
     const galaxy = await galaxyService.GetAGalaxy(req);

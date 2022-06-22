@@ -6,6 +6,5 @@ export const CreatorMiddleware = (
   next: NextFunction
 ) => {
   req.body.creator = req.decoded.id;
-
   return next();
 };

@@ -15,6 +15,7 @@ class GalaxyService {
       stripUnknown: true,
     });
   };
+
   GetAGalaxy = async ({ galaxy }: Request) => {
     const { id } = galaxy;
     const galaxyUpdate = await galaxyRepository.retrieve({ id });
@@ -23,10 +24,23 @@ class GalaxyService {
       stripUnknown: true,
     });
   };
+
   ListAllGalaxies = async (): Promise<Partial<Galaxy>[] | void> => {
     const galaxies = await galaxyRepository.getAll();
-    return galaxies;
+
+    const serializedGalaxies = [];
+
+    for (let i = 0; i < galaxies.length; i++) {
+      serializedGalaxies.push(
+        await createSerelizedGalaxySchema.validate(galaxies[i], {
+          stripUnknown: true,
+        })
+      );
+    }
+
+    return serializedGalaxies;
   };
+
   UpdateGalaxy = async ({
     galaxy,
     validData,
@@ -39,6 +53,7 @@ class GalaxyService {
       stripUnknown: true,
     });
   };
+
   DeleteGalaxy = async ({ galaxy }: Request) => {
     await galaxyRepository.delete(galaxy.id);
   };

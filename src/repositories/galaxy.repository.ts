@@ -1,7 +1,7 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Galaxy } from "../entities/galaxy.entity";
-import { IGalaxyRepo } from "../interfaces/galaxy";
+import { IGalaxyCreate, IGalaxyRepo } from "../interfaces/galaxy";
 
 class GalaxyRepository implements IGalaxyRepo {
   private repo: Repository<Galaxy>;
@@ -10,7 +10,7 @@ class GalaxyRepository implements IGalaxyRepo {
     this.repo = AppDataSource.getRepository(Galaxy);
   }
 
-  save = async (galaxy: Galaxy) => await this.repo.save(galaxy);
+  save = async (galaxy: IGalaxyCreate) => await this.repo.save(galaxy);
 
   getAll = async () => await this.repo.find();
 

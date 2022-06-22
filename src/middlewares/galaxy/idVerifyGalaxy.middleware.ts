@@ -16,6 +16,5 @@ export const IdVerifyGalaxy = async (
   }
 
   req.galaxy = galaxy;
-
   return next();
 };

@@ -29,7 +29,7 @@ export const cosmonautRoutes = () => {
     cosmonautController.loginCosmonaut
   );
 
-  routes.get("/", cosmonautController.getAllCosmonauts);
+  routes.get("/", validateToken, cosmonautController.getAllCosmonauts);
   routes.get(
     "/profile",
     validateToken,

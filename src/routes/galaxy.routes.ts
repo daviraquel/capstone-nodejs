@@ -1,6 +1,6 @@
 import { Router } from "express";
 import GalaxyController from "../controllers/galaxy/galaxyCreate.controller";
-import { schemaValidation } from "../middlewares";
+import { CreatorMiddleware, schemaValidation } from "../middlewares";
 import { checkGalaxyExists } from "../middlewares/galaxy/checkGalaxyId.middleware";
 import { IdVerifyGalaxy } from "../middlewares/galaxy/idVerifyGalaxy.middleware";
 import { validateToken } from "../middlewares/validateToken.middleware";
@@ -11,16 +11,17 @@ const routes = Router();
 export const galaxyRoutes = () => {
   routes.post(
     "/",
-    schemaValidation(createGalaxySchema),
     validateToken,
+    CreatorMiddleware,
+    schemaValidation(createGalaxySchema),
     checkGalaxyExists,
     GalaxyController.CreateGalaxy
   );
   routes.get("/", validateToken, GalaxyController.ListAllGalaxies);
   routes.get(
     "/:id",
-    IdVerifyGalaxy,
     validateToken,
+    IdVerifyGalaxy,
     GalaxyController.GetAGalaxy
   );
   routes.delete(
