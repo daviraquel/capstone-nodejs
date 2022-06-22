@@ -24,6 +24,19 @@ class DataService {
     };
   };
 
+  updateData = async ({
+    galaxy,
+    validData,
+  }: Request): Promise<AssertsShape<any>> => {
+    await dataRepository.update(galaxy.id, { ...(validData as Data) });
+    const { id } = galaxy;
+    const dataUpdate = await dataRepository.retrieve({ id });
+
+    return await serializedCreateDataSchema.validate(dataUpdate, {
+      stripUnknown: true,
+    });
+  };
+
   deleteData = async ({ validData }: Request) => {
     await dataRepository.delete(validData.id);
   };
