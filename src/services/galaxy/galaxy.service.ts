@@ -5,18 +5,27 @@ import galaxyRepository from "../../repositories/galaxy.repository";
 import { createSerelizedGalaxySchema } from "../../schemas/galaxy";
 
 class GalaxyService {
-  CreateService = async ({ galaxy }: Request): Promise<AssertsShape<any>> => {
-    const newGalaxy: Galaxy = await galaxyRepository.save({ ...galaxy });
+  CreateService = async ({
+    validData,
+  }: Request): Promise<AssertsShape<any>> => {
+    const newGalaxy: Galaxy = await galaxyRepository.save({
+      ...(validData as Galaxy),
+    });
     return await createSerelizedGalaxySchema.validate(newGalaxy, {
       stripUnknown: true,
     });
   };
-  GetAGalaxy = async ({ galaxy }: Request) => {};
-  ListAllGalaxies = async ({ galaxy }: Request) => {
-    return "";
+  GetAGalaxy = async ({ validData, galaxy }: Request) => {};
+  ListAllGalaxies = async (): Promise<Partial<Galaxy>[] | void> => {
+    const galaxies = await galaxyRepository.getAll();
+    return galaxies;
   };
-  UpdateGalaxy = async ({ galaxy }: Request) => {
-    return "";
+  UpdateGalaxy = async ({
+    galaxy,
+    validData,
+  }: Request): Promise<AssertsShape<any>> => {
+    await galaxyRepository.update(galaxy.id, { ...(validData as Galaxy) });
+    return;
   };
   DeleteGalaxy = async ({ galaxy }: Request) => {};
 }
