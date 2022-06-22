@@ -11,4 +11,10 @@ const createSerelizedGalaxySchema = yup.object().shape({
   creator: yup.string(),
 });
 
-export { createSerelizedGalaxySchema, createGalaxySchema };
+const UpdateGalaxySchema = yup.object().shape({
+  name: yup.string().lowercase().optional(),
+  creator: yup.string().uuid().optional(),
+  description: yup.string().optional(),
+});
+
+export { createSerelizedGalaxySchema, createGalaxySchema, UpdateGalaxySchema };

@@ -15,7 +15,14 @@ class GalaxyService {
       stripUnknown: true,
     });
   };
-  GetAGalaxy = async ({ validData, galaxy }: Request) => {};
+  GetAGalaxy = async ({ galaxy }: Request) => {
+    const { id } = galaxy;
+    const galaxyUpdate = await galaxyRepository.retrieve({ id });
+
+    return await createSerelizedGalaxySchema.validate(galaxyUpdate, {
+      stripUnknown: true,
+    });
+  };
   ListAllGalaxies = async (): Promise<Partial<Galaxy>[] | void> => {
     const galaxies = await galaxyRepository.getAll();
     return galaxies;
@@ -25,9 +32,16 @@ class GalaxyService {
     validData,
   }: Request): Promise<AssertsShape<any>> => {
     await galaxyRepository.update(galaxy.id, { ...(validData as Galaxy) });
-    return;
+    const { id } = galaxy;
+    const galaxyUpdate = await galaxyRepository.retrieve({ id });
+
+    return await createSerelizedGalaxySchema.validate(galaxyUpdate, {
+      stripUnknown: true,
+    });
   };
-  DeleteGalaxy = async ({ galaxy }: Request) => {};
+  DeleteGalaxy = async ({ galaxy }: Request) => {
+    await galaxyRepository.delete(galaxy.id);
+  };
 }
 
 export default new GalaxyService();
