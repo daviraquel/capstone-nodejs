@@ -6,6 +6,8 @@ declare global {
       validData: Cosmonaut | Category | Data | CelestialBody; //adicionar | Categories | OutroEntity
       category: Category;
       celestialBody: CelestialBody;
+      cosmonaut: Cosmonaut;
+      decoded: Cosmonaut;
     }
   }
 }

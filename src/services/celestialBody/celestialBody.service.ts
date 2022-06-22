@@ -17,6 +17,7 @@ class CelestialBodyService {
     });
   };
 
+
   GetCelestialBody = async () => {
     const listCelestialBodies = await celestialBodyRepository.getAll();
 
@@ -25,8 +26,10 @@ class CelestialBodyService {
       message: listCelestialBodies,
     };
   };
-
-  UpdateCelestialBody = async ({ celestialBody, validData }: Request) => {
+  UpdateCelestialBody = async ({
+    celestialBody,
+    validData,
+  }: Request): Promise<AssertsShape<any>> => {
     await celestialBodyRepository.update(celestialBody.id, {
       ...(validData as CelestialBody),
     });

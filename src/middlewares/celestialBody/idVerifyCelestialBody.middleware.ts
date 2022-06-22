@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { resolve } from "path";
 import { celestialBodyRepository } from "../../repositories";
 
 export const IdVerifyCelestialBody = async (
