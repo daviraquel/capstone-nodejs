@@ -17,4 +17,13 @@ const serializedCreateDataSchema = yup.object().shape({
   last_update: yup.date().required(),
 });
 
-export { createDataSchema, serializedCreateDataSchema };
+const UpdateDataSchema = yup.object().shape({
+  id: yup.string().uuid().required(),
+  description: yup.string().lowercase().required(),
+  mass: yup.number().required(),
+  volume: yup.number().required(),
+  distance_of_earth: yup.number().required(),
+  last_update: yup.date().required(),
+});
+
+export { createDataSchema, serializedCreateDataSchema, UpdateDataSchema };
