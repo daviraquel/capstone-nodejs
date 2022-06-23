@@ -8,6 +8,7 @@ class GalaxyService {
   CreateService = async ({
     validData,
   }: Request): Promise<AssertsShape<any>> => {
+    console.log("chegou aqui");
     const newGalaxy: Galaxy = await galaxyRepository.save({
       ...(validData as Galaxy),
     });

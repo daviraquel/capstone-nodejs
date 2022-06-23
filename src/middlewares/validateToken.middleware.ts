@@ -19,7 +19,6 @@ export const validateToken = async (
     }
 
     req.decoded = decoded as Cosmonaut;
-
     return next();
   });
 };

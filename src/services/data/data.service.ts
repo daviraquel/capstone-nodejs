@@ -11,7 +11,10 @@ class DataService {
       ...(validData as Data),
     });
 
-    return await serializedCreateDataSchema.validate(data, {
+    const { id } = data;
+    const getData = await dataRepository.retrieve({ id });
+
+    return await serializedCreateDataSchema.validate(getData, {
       stripUnknown: true,
     });
   };
