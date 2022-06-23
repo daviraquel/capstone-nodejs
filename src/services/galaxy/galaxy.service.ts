@@ -12,7 +12,11 @@ class GalaxyService {
     const newGalaxy: Galaxy = await galaxyRepository.save({
       ...(validData as Galaxy),
     });
-    return await createSerelizedGalaxySchema.validate(newGalaxy, {
+
+    const { id } = newGalaxy;
+    const getGalaxy = await galaxyRepository.retrieve({ id });
+
+    return await createSerelizedGalaxySchema.validate(getGalaxy, {
       stripUnknown: true,
     });
   };
