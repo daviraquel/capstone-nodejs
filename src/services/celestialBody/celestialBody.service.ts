@@ -12,7 +12,10 @@ class CelestialBodyService {
       ...(validData as CelestialBody),
     });
 
-    return await serializedCelestialBodySchema.validate(celestialBody, {
+    const { id } = celestialBody;
+    const getCelestialBody = await celestialBodyRepository.retrieve({ id });
+
+    return await serializedCelestialBodySchema.validate(getCelestialBody, {
       stripUnknown: true,
     });
   };
@@ -20,10 +23,31 @@ class CelestialBodyService {
   GetCelestialBody = async () => {
     const listCelestialBodies = await celestialBodyRepository.getAll();
 
+    const serializedCelestialBodies = [];
+
+    for (let i = 0; i < listCelestialBodies.length; i++) {
+      serializedCelestialBodies.push(
+        await serializedCelestialBodySchema.validate(listCelestialBodies[i], {
+          stripUnknown: true,
+        })
+      );
+    }
+
+    return serializedCelestialBodies;
+
     return {
       status: 200,
       message: listCelestialBodies,
     };
+  };
+
+  GetACelestialBody = async ({ celestialBody }: Request) => {
+    const { id } = celestialBody;
+    const galaxyUpdate = await celestialBodyRepository.retrieve({ id });
+
+    return await serializedCelestialBodySchema.validate(galaxyUpdate, {
+      stripUnknown: true,
+    });
   };
 
   UpdateCelestialBody = async ({

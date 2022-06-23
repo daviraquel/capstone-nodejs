@@ -23,18 +23,22 @@ export class CelestialBody {
   @Column({ default: new Date() })
   created_on: Date;
 
-  @OneToOne((type) => Data, {
-    eager: true,
-  })
+  @OneToOne((type) => Data)
   @JoinColumn()
   data: Data;
 
-  @ManyToOne((type) => Cosmonaut, (cosmonaut) => cosmonaut.created_bodies)
+  @ManyToOne((type) => Cosmonaut, (cosmonaut) => cosmonaut.created_bodies, {
+    eager: true,
+  })
   creator: Cosmonaut;
 
-  @ManyToOne((type) => Category, (category) => category.celestial_bodies)
+  @ManyToOne((type) => Category, (category) => category.celestial_bodies, {
+    eager: true,
+  })
   category: Category;
 
-  @ManyToOne((type) => Galaxy, (galaxy) => galaxy.celestial_bodies)
+  @ManyToOne((type) => Galaxy, (galaxy) => galaxy.celestial_bodies, {
+    eager: true,
+  })
   galaxy: Galaxy;
 }

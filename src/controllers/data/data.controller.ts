@@ -13,6 +13,11 @@ class dataController {
     return res.status(200).json(getData);
   };
 
+  getByIdDate = async (req: Request, res: Response) => {
+    const data = await dataService.getByIdData(req);
+    return res.status(200).json(data);
+  };
+
   updateData = async (req: Request, res: Response) => {
     const galaxy = await dataService.updateData(req);
     return res.status(200).json(galaxy);

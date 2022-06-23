@@ -6,6 +6,7 @@ import { serializedCreateDataSchema } from "../../schemas/data";
 
 class DataService {
   createData = async ({ validData }: Request): Promise<AssertsShape<any>> => {
+    console.log(validData);
     const data: Data = await dataRepository.save({
       ...(validData as Data),
     });
@@ -18,18 +19,37 @@ class DataService {
   getData = async () => {
     const listData = await dataRepository.getAll();
 
+    const serializedData = [];
+
+    for (let i = 0; i < listData.length; i++) {
+      serializedData.push(
+        await serializedCreateDataSchema.validate(listData[i], {
+          stripUnknown: true,
+        })
+      );
+    }
+
     return {
       status: 200,
-      message: listData,
+      message: serializedData,
     };
   };
 
+  getByIdData = async ({ data }: Request) => {
+    const { id } = data;
+    const galaxyUpdate = await dataRepository.retrieve({ id });
+
+    return await serializedCreateDataSchema.validate(galaxyUpdate, {
+      stripUnknown: true,
+    });
+  };
+
   updateData = async ({
-    galaxy,
+    data,
     validData,
   }: Request): Promise<AssertsShape<any>> => {
-    await dataRepository.update(galaxy.id, { ...(validData as Data) });
-    const { id } = galaxy;
+    await dataRepository.update(data.id, { ...(validData as Data) });
+    const { id } = data;
     const dataUpdate = await dataRepository.retrieve({ id });
 
     return await serializedCreateDataSchema.validate(dataUpdate, {
@@ -37,8 +57,8 @@ class DataService {
     });
   };
 
-  deleteData = async ({ validData }: Request) => {
-    await dataRepository.delete(validData.id);
+  deleteData = async ({ data }: Request) => {
+    await dataRepository.delete(data.id);
   };
 }
 

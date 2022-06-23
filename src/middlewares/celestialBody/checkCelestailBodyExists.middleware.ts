@@ -7,15 +7,19 @@ export const checkCelestialBodyExists = async (
   res: Response,
   next: NextFunction
 ) => {
-  const celestialBodyExists = await celestialBodyRepository.retrieve({
-    name: (req.validData as CelestialBody).name,
-  });
+  try {
+    const celestialBodyExists = await celestialBodyRepository.retrieve({
+      name: (req.validData as CelestialBody).name,
+    });
 
-  if (celestialBodyExists) {
-    return res
-      .status(409)
-      .json({ status: "error", message: "Celestial body already exists" });
+    if (celestialBodyExists) {
+      return res
+        .status(409)
+        .json({ status: "error", message: "Celestial body already exists" });
+    }
+
+    return next();
+  } catch (err) {
+    console.log(err);
   }
-
-  return next();
 };

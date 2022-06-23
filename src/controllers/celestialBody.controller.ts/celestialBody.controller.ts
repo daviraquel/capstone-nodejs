@@ -14,7 +14,7 @@ class CelestialBodyController {
   };
 
   GetCelestialBodyById = async (req: Request, res: Response) => {
-    const { celestialBody } = req;
+    const celestialBody = await celestialBodyService.GetACelestialBody(req);
     return res.status(200).json(celestialBody);
   };
 

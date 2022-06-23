@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { Data } from "../../entities";
 import { dataRepository } from "../../repositories";
 
 export const IdVerifyData = async (
@@ -14,7 +15,7 @@ export const IdVerifyData = async (
     return res.status(404).json({ message: "Data was't found" });
   }
 
-  req.validData = data;
+  req.data = data as Data;
 
   return next();
 };

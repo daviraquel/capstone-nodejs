@@ -11,7 +11,7 @@ export const appRoutes = (app: Express) => {
   app.use("/galaxy", galaxyRoutes());
   app.use("/category", categoryRoutes());
   app.use("/data", dataRoutes());
-  app.use("/celestial_body", celestialBodyRoutes());
+  app.use("/celestialBody", celestialBodyRoutes());
 
   // registrar outras rotas
 };
