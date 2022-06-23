@@ -16,10 +16,10 @@ export const celestialBodyRoutes = () => {
     "/",
     validateToken,
     CreatorMiddleware,
-    schemaValidation(createCelestialBodySchema)
-  ),
-    checkCelestialBodyExists;
-  celestialBodyController.CreateCelestialBody;
+    schemaValidation(createCelestialBodySchema),
+    checkCelestialBodyExists,
+    celestialBodyController.CreateCelestialBody
+  );
 
   routes.get("/", celestialBodyController.GetCelestialBody);
   routes.get(
