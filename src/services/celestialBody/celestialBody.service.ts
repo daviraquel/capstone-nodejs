@@ -23,6 +23,18 @@ class CelestialBodyService {
   GetCelestialBody = async () => {
     const listCelestialBodies = await celestialBodyRepository.getAll();
 
+    const serializedCelestialBodies = [];
+
+    for (let i = 0; i < listCelestialBodies.length; i++) {
+      serializedCelestialBodies.push(
+        await serializedCelestialBodySchema.validate(listCelestialBodies[i], {
+          stripUnknown: true,
+        })
+      );
+    }
+
+    return serializedCelestialBodies;
+
     return {
       status: 200,
       message: listCelestialBodies,

@@ -1,14 +1,6 @@
 import * as yup from "yup";
 
 export const serializedCelestialBodySchema = yup.object().shape({
-  data: yup.object().shape({
-    description: yup.string(),
-    mass: yup.number(),
-    volume: yup.number(),
-    distance_of_earth: yup.number(),
-    last_update: yup.date(),
-  }),
-
   category: yup.object().shape({
     name: yup.string(),
   }),

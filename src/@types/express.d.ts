@@ -8,6 +8,7 @@ declare global {
       galaxy: Galaxy;
       celestialBody: CelestialBody;
       cosmonaut: Cosmonaut;
+      data: Data;
       decoded: Cosmonaut;
     }
   }

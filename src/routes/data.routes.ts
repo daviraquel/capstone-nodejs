@@ -12,21 +12,22 @@ const routes = Router();
 export const dataRoutes = () => {
   routes.post(
     "/",
-    schemaValidation(createDataSchema),
     validateToken,
+    schemaValidation(createDataSchema),
     checkDataExists,
     dataController.createData
   );
 
   routes.get("/", validateToken, dataController.getData);
+  routes.get("/:id", validateToken, IdVerifyData, dataController.getByIdDate);
 
-  routes.delete("/:id", IdVerifyData, validateToken, dataController.deleteData);
+  routes.delete("/:id", validateToken, IdVerifyData, dataController.deleteData);
 
   routes.patch(
     "/:id",
-    IdVerifyData,
     validateToken,
     schemaValidation(UpdateDataSchema),
+    IdVerifyData,
     dataController.updateData
   );
 
